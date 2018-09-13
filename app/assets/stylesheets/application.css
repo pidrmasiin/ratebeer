@@ -13,3 +13,10 @@
  *= require_tree .
  *= require_self
  */
+
+ .navibar {
+    padding: 10px;
+    background: #EFEFEF;
+    font-size: 1.5em;
+    padding: 1em
+}

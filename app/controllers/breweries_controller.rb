@@ -1,5 +1,6 @@
 class BreweriesController < ApplicationController
   before_action :set_brewery, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate, only: [:destroy]
 
   # GET /breweries
   # GET /breweries.json
@@ -71,4 +72,19 @@ class BreweriesController < ApplicationController
     def brewery_params
       params.require(:brewery).permit(:name, :year)
     end
+
+    def authenticate
+      admin_accounts = { "pekka" => "beer", "arto" => "foobar", "matti" => "ittam", "vilma" => "kAngas" } 
+      authenticate_or_request_with_http_basic do | username, password | 
+        if admin_accounts[username.downcase].downcase == password.downcase
+          login_ok = true
+        else
+          login_ok = false  # käyttäjätunnus/salasana oli väärä
+        end
+  
+        # koodilohkon arvo on sen viimeisen komennon arvo eli true/false riippuen kirjautumisen onnistumisesta
+        login_ok  
+      end
+    end
+
 end
