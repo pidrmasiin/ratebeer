@@ -1,10 +1,14 @@
 class Beer < ApplicationRecord
- include RatingAverage
+  include RatingAverage
 
- belongs_to :brewery
- has_many :ratings, dependent: :destroy
+  validates :name, :style, presence: true
+  validates :name, uniqueness: true
+  
+  belongs_to :brewery
+  has_many :ratings, dependent: :destroy
+  has_many :raters, through: :ratings, source: :user
 
-    def to_s
-        return "#{name} (brewery: #{brewery.name})"
-    end
+  def to_s
+    "#{name} (brewery: #{brewery.name})"
+  end
 end

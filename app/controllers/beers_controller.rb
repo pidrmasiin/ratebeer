@@ -16,7 +16,7 @@ class BeersController < ApplicationController
   def new
     @beer = Beer.new
     @breweries = Brewery.all
-    @styles = get_styles
+    @styles = set_styles
   end
 
   # GET /beers/1/edit
@@ -27,12 +27,13 @@ class BeersController < ApplicationController
   # POST /beers.json
   def create
     @beer = Beer.new(beer_params)
-
     respond_to do |format|
       if @beer.save
         format.html { redirect_to beers_path, notice: 'Beer was successfully created.' }
         format.json { render :show, status: :created, location: @beer }
       else
+        @styles = set_styles
+        @breweries = Brewery.all
         format.html { render :new }
         format.json { render json: @beer.errors, status: :unprocessable_entity }
       end
@@ -64,20 +65,20 @@ class BeersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_beer
-      @beer = Beer.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def beer_params
-      params.require(:beer).permit(:name, :style, :brewery_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_beer
+    @beer = Beer.find(params[:id])
+  end
 
-    def get_styles
-      b = Beer.all
-      names = b.map{ |b| b.style }
-      return names.uniq
-    end
-    
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def beer_params
+    params.require(:beer).permit(:name, :style, :brewery_id)
+  end
+
+  def set_styles
+    b = Beer.all
+    names = b.map(&:style)
+    names.uniq
+  end
 end

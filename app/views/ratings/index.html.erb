@@ -3,7 +3,11 @@
 <ul>
  <% @ratings.each do |rating| %>
    <li> 
-  <%= rating.to_s %> <%= link_to 'delete', rating_path(rating.id), method: :delete, data: { confirm: 'Are you sure?' } %></li>
+  <%= rating.to_s %>
+  <% if current_user && current_user.id == rating.user_id %>
+  <%= link_to current_user.username, user_path(current_user.id) %>
+  <% end %>
+  </li>
  <% end %>
 </ul>
 <%= link_to 'New Rating', new_rating_path %>

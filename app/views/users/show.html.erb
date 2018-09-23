@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+<% if  @user.ratings.length() > 0%>
+Has made <%= @user.ratings.length() %>, avarage rating <%= @user.average_rating().truncate(2)%>
+<% end %>
+<p>
+  <strong>Username:</strong>
+  <%= @user.username %>
+  <td><%= link_to 'Destroy', @user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
+</p>
+
+<ul>
+ <% @user.ratings.each do |rating| %>
+ <li> <%= rating.beer.name %>, <%= rating.score %>,
+ <% if @user == current_user %>
+  <%= link_to 'Destroy', rating, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+ <% end %>
+ <% end %>
+ <ul>
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>
