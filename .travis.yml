@@ -6,7 +6,3 @@ rvm:
 script:
 - bundle exec rails db:migrate 
 - bundle exec rspec -fd spec
-
-deploy:
-  provider: heroku
-  run: "rake db:migrate"
