@@ -9,11 +9,23 @@ Has made <%= @user.ratings.length() %>, avarage rating <%= @user.average_rating(
 
 </p>
 
+<p>
+  <% if @user.beer_clubs.any? %>
+    member of 
+    <% @user.beer_clubs.each do |club| %>
+      <li> <%= link_to club.name, club %> </li>
+    <% end %>
+  <% end %>
+</p>
+
+<h3>ratings</h3>
+<p>Favorite style = <%= @user.favorite_style() %></p>
+<p>Favorite brewery = <%= @user.favorite_brewery() %></p>
 <ul>
  <% @user.ratings.each do |rating| %>
  <li> <%= rating.beer.name %>, <%= rating.score %>,
  <% if @user == current_user %>
-  <%= link_to 'Destroy', rating, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+  <%= link_to 'Destroy', rating, method: :delete, data: { confirm: 'Are you sure?' }, id: rating.id%></li>
  <% end %>
  <% end %>
  <ul>

@@ -16,7 +16,7 @@ class BeersController < ApplicationController
   def new
     @beer = Beer.new
     @breweries = Brewery.all
-    @styles = set_styles
+    @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter"]
   end
 
   # GET /beers/1/edit
@@ -32,10 +32,10 @@ class BeersController < ApplicationController
         format.html { redirect_to beers_path, notice: 'Beer was successfully created.' }
         format.json { render :show, status: :created, location: @beer }
       else
-        @styles = set_styles
+        @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter"]
         @breweries = Brewery.all
-        format.html { render :new }
-        format.json { render json: @beer.errors, status: :unprocessable_entity }
+        format.html { render :new, notice: 'Name cant be empty' }
+        format.json { render json: @beer.errors, notice: ':unprocessable_entity' }
       end
     end
   end
@@ -49,7 +49,7 @@ class BeersController < ApplicationController
         format.json { render :show, status: :ok, location: @beer }
       else
         format.html { render :edit }
-        format.json { render json: @beer.errors, status: :unprocessable_entity }
+        format.json { render json: @beer.errors, notice: :unprocessable_entity }
       end
     end
   end
@@ -62,6 +62,12 @@ class BeersController < ApplicationController
       format.html { redirect_to beers_url, notice: 'Beer was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def average
+    return 0 if ratings.empty?
+
+    ratings.map(&:score).sum / ratings.count.to_f
   end
 
   private
