@@ -17,11 +17,10 @@ class User < ApplicationRecord
                          message: "must contain one capital letter and number"
                        }
 
-
   def favorite_beer
     return nil if ratings.empty?
-  
-    ratings.sort_by{ |r| r.score }.last.beer
+
+    ratings.max_by(&:score).beer
   end
 
   def favorite_style
@@ -31,14 +30,14 @@ class User < ApplicationRecord
     theaverage = 0
 
     ratings.map{ |rating| rating.beer.style }.uniq.each do |style|
-      scores = ratings.select{ |rating| rating.beer.style == style }.map{ |rating| rating.score }
+      scores = ratings.select{ |rating| rating.beer.style == style }.map(&:score)
       average = scores.reduce(:+) / scores.size.to_f
       if average >= theaverage
         theaverage = average
         thestyle = style
       end
     end
-    return thestyle
+    thestyle
   end
 
   def favorite_brewery
@@ -48,13 +47,13 @@ class User < ApplicationRecord
     theaverage = 0
 
     ratings.map{ |rating| rating.beer.brewery }.uniq.each do |brewery|
-      scores = ratings.select{ |rating| rating.beer.brewery == brewery }.map{ |rating| rating.score }
+      scores = ratings.select{ |rating| rating.beer.brewery == brewery }.map(&:score)
       average = scores.reduce(:+) / scores.size.to_f
       if average >= theaverage
         theaverage = average
         thebrewery = brewery
       end
     end
-    return thebrewery.name
+    thebrewery.name
   end
 end
