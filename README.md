@@ -1,6 +1,6 @@
 # ratebeer
 
-[Linkki herokuun](https://beersror.herokuapp.com/)
+[Linkki herokuu](https://beersror.herokuapp.com/)
 
 [![Build Status](https://travis-ci.org/pidrmasiin/ratebeer.svg?branch=master)](https://travis-ci.org/pidrmasiin/ratebeer)
 
