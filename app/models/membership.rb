@@ -6,4 +6,4 @@ class Membership < ApplicationRecord
     scope: :user,
     message: "you are already a member!"
   }
-  end
+end

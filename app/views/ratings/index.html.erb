@@ -10,4 +10,4 @@ How many ratings: <%= @ratings.size %>
   </li>
  <% end %>
 </ul>
-<%= link_to 'New Rating', new_rating_path %>
+<%= link_to 'New Rating', new_rating_path if current_user%>
