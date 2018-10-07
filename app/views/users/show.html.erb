@@ -1,7 +1,5 @@
 <p id="notice"><%= notice %></p>
-<% if  @user.ratings.length() > 0%>
-Has made <%= @user.ratings.length() %>, avarage rating <%= @user.average_rating().truncate(2)%>
-<% end %>
+
 <p>
   <strong>Username:</strong>
   <%= @user.username %>
@@ -9,6 +7,11 @@ Has made <%= @user.ratings.length() %>, avarage rating <%= @user.average_rating(
 
 </p>
 
+<% if  @user.ratings.length() > 0%>
+Has made <%= @user.ratings.length() %>, avarage rating <%= @user.average_rating().truncate(2)%>
+<p>Favorite style = <%= @user.favorite_style() %></p>
+<p>Favorite brewery = <%= @user.favorite_brewery() %></p>
+<% end %>
 <p>
   <% if @user.beer_clubs.any? %>
     member of 
@@ -19,8 +22,7 @@ Has made <%= @user.ratings.length() %>, avarage rating <%= @user.average_rating(
 </p>
 
 <h3>ratings</h3>
-<p>Favorite style = <%= @user.favorite_style() %></p>
-<p>Favorite brewery = <%= @user.favorite_brewery() %></p>
+
 <ul>
  <% @user.ratings.each do |rating| %>
  <li> <%= rating.beer.name %>, <%= rating.score %>,

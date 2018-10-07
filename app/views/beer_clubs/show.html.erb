@@ -3,7 +3,19 @@
 <h2>
   <%= @beer_club.name %> <%= @beer_club.city %>
 </h2>
-
+<% if current_user %>
+  <% if @beer_club.memberships.select{|m| m.user_id == @membership.user_id}.size < 1 %>
+  <%= form_for(@membership) do |f| %>
+  <%= f.hidden_field :beer_club_id %>
+  <%= f.submit value:"join the club" %>
+  <% end %>
+  <% else %>
+  <%= form_for(@membership, url: membership_path(@beer_club.memberships.select{|m| m.user_id == @membership.user_id}[0].id), method: "delete") do |f| %>
+  <%= f.hidden_field :beer_club_id %>
+  <%= f.submit value: "end the membership" %>
+  <% end %>
+  <% end %>
+<% end %>
 <p>
  Founded
   <%= @beer_club.founded %>

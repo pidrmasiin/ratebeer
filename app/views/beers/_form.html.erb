@@ -19,7 +19,7 @@
     <br/>
     Style
     <br/>
-    <%= b.select(:style, @styles) %>
+    <%= b.select :style, options_from_collection_for_select(@styles, :id, :name) %>
     <br/>
     <br/>
     Brewery

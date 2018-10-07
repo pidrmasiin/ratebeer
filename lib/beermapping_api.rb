@@ -17,6 +17,13 @@ class BeermappingApi
       Place.new(place)
     end
   end
+
+  def self.get_places_by_id(id)
+    url = "http://beermapping.com/webservice/locquery/#{key}/"
+
+    response = HTTParty.get "#{url}#{id}&s=json"
+    Place.new(response[0])
+  end
   
   def self.key
     raise "BEERMAPPING_APIKEY env variable not defined" if ENV['BEERMAPPING_APIKEY'].nil?

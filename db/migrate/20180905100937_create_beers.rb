@@ -4,6 +4,7 @@ class CreateBeers < ActiveRecord::Migration[5.2]
       t.string :name
       t.string :style
       t.integer :brewery_id
+      t.integer :style_id
 
       t.timestamps
     end

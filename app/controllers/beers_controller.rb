@@ -10,13 +10,15 @@ class BeersController < ApplicationController
   # GET /beers/1
   # GET /beers/1.json
   def show
+    @rating = Rating.new
+    @rating.beer = @beer
   end
 
   # GET /beers/new
   def new
     @beer = Beer.new
     @breweries = Brewery.all
-    @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter"]
+    @styles = Style.all
   end
 
   # GET /beers/1/edit
@@ -26,13 +28,15 @@ class BeersController < ApplicationController
   # POST /beers
   # POST /beers.json
   def create
-    @beer = Beer.new(beer_params)
+    joku = Style.find(beer_params[:style])
+    @beer = Beer.new(name:beer_params[:name], brewery_id:beer_params[:brewery_id], style: joku)
+    puts @beer
     respond_to do |format|
       if @beer.save
         format.html { redirect_to beers_path, notice: 'Beer was successfully created.' }
         format.json { render :show, status: :created, location: @beer }
       else
-        @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter"]
+        @styles = Style.all
         @breweries = Brewery.all
         format.html { render :new, notice: 'Name cant be empty' }
         format.json { render json: @beer.errors, notice: ':unprocessable_entity' }

@@ -1,5 +1,6 @@
 class MembershipsController < ApplicationController
-  before_action :ensure_that_signed_in, except: [:index, :show]
+  before_action :ensure_that_signed_in
+  before_action :set_membership, only: [:show, :edit, :update, :destroy]
 
   # GET /memberships
   # GET /memberships.json
@@ -10,6 +11,7 @@ class MembershipsController < ApplicationController
   # GET /memberships/1
   # GET /memberships/1.json
   def show
+    
   end
 
   # GET /memberships/new
@@ -30,7 +32,7 @@ class MembershipsController < ApplicationController
 
     respond_to do |format|
       if @membership.save
-        format.html { redirect_to @membership, notice: 'Membership was successfully created.' }
+        format.html { redirect_to beer_club_path(@membership.beer_club_id), notice: 'Membership was successfully created.' }
         format.json { render :show, status: :created, location: @membership }
       else
         @clubs = BeerClub.all - current_user.beer_clubs
@@ -57,9 +59,10 @@ class MembershipsController < ApplicationController
   # DELETE /memberships/1
   # DELETE /memberships/1.json
   def destroy
+    copy =  @membership
     @membership.destroy
     respond_to do |format|
-      format.html { redirect_to memberships_url, notice: 'Membership was successfully destroyed.' }
+      format.html { redirect_to user_path(copy.user_id), notice: 'Membership in ' + copy.beer_club.name.to_s + ' was successfully ended.' }
       format.json { head :no_content }
     end
   end
