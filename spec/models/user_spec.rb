@@ -28,8 +28,11 @@ RSpec.describe User, type: :model do
  
 
   describe "with a proper password" do
+   
     let(:user) { FactoryBot.create(:user) }
-  
+    before :each do
+      FactoryBot.create :style
+    end
     it "is saved" do
       expect(user).to be_valid
       expect(User.count).to eq(1)
@@ -79,12 +82,13 @@ RSpec.describe User, type: :model do
       expect(user.favorite_style).to eq(nil)
     end
     it "the one is the favorite if only one rating" do
-      beer = FactoryBot.create(:beer, style:'lager')
+      beer = FactoryBot.create(:beer)
       rating = FactoryBot.create(:rating, score: 20, beer: beer, user: user)
     
       expect(user.favorite_style).to eq('lager')
     end
     it "is style with highest ratings is favorite if several rated" do
+
       create_beers_with_style_and_many_ratings({user: user}, 10, 20, 15, 7, 9, 'lager')
       create_beers_with_style_and_many_ratings({user: user}, 10, 20, 15, 9, 9, 'ipa')
       create_beers_with_style_and_many_ratings({user: user}, 10, 20, 15, 8, 9, 'porter')
@@ -136,7 +140,12 @@ def create_beers_with_many_ratings(object, *scores)
 end
 
 def create_beer_with_style_and_rating(object, score, style)
-  beer = FactoryBot.create(:beer, style: style)
+  thestyle = FactoryBot.create(:style, name: style)
+  puts "halloooooo"
+  puts thestyle.name
+  beer = FactoryBot.create(:beer, style: thestyle)
+  puts "halloooooo2222"
+  puts beer.style
   FactoryBot.create(:rating, beer: beer, score: score, user: object[:user] )
   beer
 end

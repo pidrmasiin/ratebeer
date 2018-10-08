@@ -5,6 +5,7 @@ include Helpers
 
 describe "User" do
   before :each do
+    FactoryBot.create :style
     FactoryBot.create :user
   end
 
@@ -37,10 +38,11 @@ describe "User" do
   describe "user ratings" do
     let(:user2) { FactoryBot.create(:user, username: "Kalle") }
     let(:user3) { FactoryBot.create(:user, username: "Jalle") }
-    let(:beerbe) { FactoryBot.create(:beer, name: 'beerbee', style: 'Porter') }
+    let(:beerbe) { FactoryBot.create(:beer, name: 'beerbee') }
 
     before :each do
         # jotta muuttuja näkyisi it-lohkoissa, tulee sen nimen alkaa @-merkillä
+        FactoryBot.create(:style, name: 'beerbeestyle')
         FactoryBot.create(:rating, user: user2)
         FactoryBot.create(:rating, beer: beerbe, user: user2)
         sign_in(username: "Kalle", password: "Foobar1")
@@ -59,7 +61,7 @@ describe "User" do
 
     it "show favorite brewery and style" do
         puts page.html
-        expect(page).to have_content 'Favorite style = Porter'
+        expect(page).to have_content 'Favorite style = lager'
         expect(page).to have_content 'Favorite brewery = anonymous'
     end
 

@@ -29,8 +29,8 @@ class User < ApplicationRecord
     thestyle = ''
     theaverage = 0
 
-    ratings.map{ |rating| rating.beer.style }.uniq.each do |style|
-      scores = ratings.select{ |rating| rating.beer.style == style }.map(&:score)
+    ratings.map{ |rating| rating.beer.style.name }.uniq.each do |style|
+      scores = ratings.select{ |rating| rating.beer.style.name == style }.map(&:score)
       average = scores.reduce(:+) / scores.size.to_f
       if average >= theaverage
         theaverage = average
