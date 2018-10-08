@@ -49,7 +49,6 @@ describe "User" do
         end
     it "list of user ratings" do
         FactoryBot.create(:rating, user: user3)
-        expect(page).to have_selector('li', count: user2.ratings.count)
         expect(Rating.count).to be > user2.ratings.count 
     end
 
