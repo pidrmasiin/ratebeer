@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :places, only: [:index, :show]
   resources :ratings, only: [:index, :new, :create, :destroy]
   resource :session, only: [:new, :create, :destroy]
+  resources :styles
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   get '/', to: 'breweries#index'
   get 'signup', to: 'users#new'
