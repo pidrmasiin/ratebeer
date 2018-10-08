@@ -1,5 +1,6 @@
 require "rails_helper"
 
+
 RSpec.describe User, type: :model do
   it "if beer has name,style and brewery it can be stored" do
     brewery = Brewery.create name: "Panimo", year:1400

@@ -1,5 +1,6 @@
 require 'rails_helper'
 require 'helper'
+require 'spec_helper'
 
 include Helpers
 
