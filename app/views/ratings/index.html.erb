@@ -1,13 +1,48 @@
-<h2>List of ratings</h2>
-How many ratings: <%= @ratings.size %>
-<ul>
- <% @ratings.each do |rating| %>
-   <li> 
-  <%= rating.to_s %>
-  <% if current_user && current_user.id == rating.user_id %>
-  <%= link_to current_user.username, user_path(current_user.id) %>
-  <% end %>
-  </li>
- <% end %>
-</ul>
-<%= link_to 'New Rating', new_rating_path if current_user%>
+<div style='margin: 2em'>
+  <h1>List of ratings</h1>
+  <h4>How many ratings totally: <span class="badge badge-secondary"><%= @ratings.size %></span></h4>
+  
+  <br/>
+  <div class='row' >
+    <div class='row'>
+      <h2>Top lists</h2>
+    </div>
+    <div class='row'>
+      <div class="col-sm-4">
+        <h3>Beers</h3>
+        <%= render 'list', ones: @best_beers %>
+      </div>
+      <div class="col-sm-4">
+        <h3>Breweries</h3>
+        <%= render 'list', ones: @best_breweries %>
+      </div>
+      <div class="col-sm-4">
+        <h3>Styles</h3>
+        <%= render 'list', ones: @best_styles %>
+      </div>
+    </div>
+  </div>
+  <div class='row' style='margin: 2em'>
+    <div class="col-sm-12">
+    <ul class="list-group">
+    <li class="list-group-item active"><h4>Most active users</h4></li>
+    <% @best_users.each do |user| %>
+      <li class="list-group-item">
+        <%= user.username %> : <%= user.average_rating() %>
+      </li>
+    <% end %>
+  </ul>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='row'>
+      <h2>5 newest rating</h2>
+    </div>
+    <div class='row'>
+      <% @recent_ratings.each do |rating| %>
+        <%= render 'card', rating: rating %>
+      <% end %>
+    </div>
+  </div>
+  <%= link_to 'New Rating', new_rating_path if current_user%>
+</div>

@@ -17,7 +17,8 @@ class SessionsController < ApplicationController
   end
 
   def destroy
+    puts "HalooOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
     session[:user_id] = nil
-    redirect_to breweries_path
+    redirect_to :root
   end
 end

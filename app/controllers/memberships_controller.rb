@@ -11,7 +11,6 @@ class MembershipsController < ApplicationController
   # GET /memberships/1
   # GET /memberships/1.json
   def show
-    
   end
 
   # GET /memberships/new
@@ -59,7 +58,7 @@ class MembershipsController < ApplicationController
   # DELETE /memberships/1
   # DELETE /memberships/1.json
   def destroy
-    copy =  @membership
+    copy = @membership
     @membership.destroy
     respond_to do |format|
       format.html { redirect_to user_path(copy.user_id), notice: 'Membership in ' + copy.beer_club.name.to_s + ' was successfully ended.' }

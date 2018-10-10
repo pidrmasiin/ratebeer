@@ -1,0 +1,15 @@
+<div class="card border-info mb-3" style="width: 18rem; margin: 1rem">
+  <% if current_user && current_user.id == rating.user_id %>
+    <div class="card-header" >
+      <%= link_to "This is your rating", user_path(current_user.id), class: 'btn btn-outline-secondary' %>
+    </div>
+  <% end %>
+  <div class="card-body">
+    <h5 class="card-title"><%= rating.beer.name %></h5>
+    <p class="card-text">Score: <%= rating.score %></p>
+    <p class="card-text"><%= rating.created_at.strftime("Rated on %m/%d/%Y") %></p>
+  </div>
+  <div class="card-footer text-muted">
+    <%= rating.beer.brewery.name %>
+  </div>
+</div>

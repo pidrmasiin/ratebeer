@@ -30,7 +30,7 @@
 
   <div class="actions">
   <% if @user.new_record? %>
-    <%= form.submit %>
+     <%= form.submit class:"btn btn-primary" %>
   <% else %>
     <%= form.submit 'Update password' %>
   <% end %>
