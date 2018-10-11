@@ -1,7 +1,6 @@
 class Brewery < ApplicationRecord
   include RatingAverage
 
-  
   validates :name, presence: true
   validates :year, numericality: { only_integer: true,
                                    greater_than: 1039,
@@ -11,7 +10,7 @@ class Brewery < ApplicationRecord
   has_many :ratings, through: :beers
 
   scope :active, -> { where active: true }
-  scope :retired, -> { where active: [nil,false] }
+  scope :retired, -> { where active: [nil, false] }
 
   def print_report
     puts name
@@ -26,6 +25,6 @@ class Brewery < ApplicationRecord
 
   def self.top(n)
     sorted_by_rating_in_desc_order = Brewery.all.sort_by{ |b| -(b.average_rating || 0) }
-    return sorted_by_rating_in_desc_order.take(n)
+    sorted_by_rating_in_desc_order.take(n)
   end
 end

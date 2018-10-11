@@ -1,4 +1,5 @@
 class BeersController < ApplicationController
+  before_action :ensure_that_admin, only: [:destroy]
   before_action :ensure_that_signed_in, except: [:index, :show]
   before_action :set_beer, only: [:show, :edit, :update, :destroy]
   # GET /beers
@@ -23,6 +24,9 @@ class BeersController < ApplicationController
 
   # GET /beers/1/edit
   def edit
+    @beer = Beer.find(params[:id])
+    @breweries = Brewery.all
+    @styles = Style.all
   end
 
   # POST /beers
@@ -47,8 +51,13 @@ class BeersController < ApplicationController
   # PATCH/PUT /beers/1
   # PATCH/PUT /beers/1.json
   def update
+    puts "haloooooo"
+    puts beer_params
+    copy = beer_params
+    copy['style'] = Style.find(copy['style'])
+    puts copy
     respond_to do |format|
-      if @beer.update(beer_params)
+      if @beer.update(copy)
         format.html { redirect_to @beer, notice: 'Beer was successfully updated.' }
         format.json { render :show, status: :ok, location: @beer }
       else

@@ -6,7 +6,7 @@
 
 <p>
   <strong>Style:</strong>
-  <%= @beer.style %>
+  <%= @beer.style.name %>
 </p>
 
 <p>
@@ -28,9 +28,9 @@
   <%= form_for(@rating) do |f| %>
     <%= f.hidden_field :beer_id %>
     score: <%= f.number_field :score %>
-     <%= form.submit class:"btn btn-primary" %>
+     <%= f.submit class:"btn btn-primary" %>
   <% end %>
 
   <%= link_to 'Edit', edit_beer_path(@beer) %> 
-  <%= link_to 'Destroy', @beer, method: :delete, data: { confirm: 'Are you sure?' } %>
+  <%= link_to 'Destroy', @beer, method: :delete, data: { confirm: 'Are you sure?' } if current_user && current_user.admin%>
 <% end %>

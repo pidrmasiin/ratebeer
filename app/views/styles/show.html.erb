@@ -1,4 +1,9 @@
 <p id="notice"></p>
-<p><%= @style.name %></p>
-<%= link_to 'Edit', edit_style_path(@style) %> |
-<%= link_to 'Back', styles_path %>
+<h2>
+  <%= @style.name %>
+</h2>
+
+<pre>
+  <%= @style.info %>
+</pre>
+<%= edit_and_destroy_buttons(@style) %>

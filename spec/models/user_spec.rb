@@ -141,11 +141,7 @@ end
 
 def create_beer_with_style_and_rating(object, score, style)
   thestyle = FactoryBot.create(:style, name: style)
-  puts "halloooooo"
-  puts thestyle.name
   beer = FactoryBot.create(:beer, style: thestyle)
-  puts "halloooooo2222"
-  puts beer.style
   FactoryBot.create(:rating, beer: beer, score: score, user: object[:user] )
   beer
 end

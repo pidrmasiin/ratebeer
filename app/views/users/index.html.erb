@@ -15,6 +15,10 @@
       <tr>
         <td><%= user.username %></td>
         <td><%= link_to 'Show', user %></td>
+        <td><%= link_to "Change account status", toggle_activity_user_path(user.id), method: :post, class: "btn btn-primary" if current_user && current_user.admin && current_user.id != user.id %></td>
+        <%  if user.closed && current_user && current_user.admin %>
+         <td style='color:red'>Closed</td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

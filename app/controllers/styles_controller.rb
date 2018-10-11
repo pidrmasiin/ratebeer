@@ -1,4 +1,5 @@
 class StylesController < ApplicationController
+  before_action :ensure_that_admin, only: [:destroy]
   before_action :set_style, only: [:show, :edit, :update, :destroy]
 
   # GET /styles
@@ -24,7 +25,7 @@ class StylesController < ApplicationController
   # POST /styles
   # POST /styles.json
   def create
-    @style = Style.new(style_params)
+    @style = Style.new(style_params['name'], info: style_params['info'])
 
     respond_to do |format|
       if @style.save

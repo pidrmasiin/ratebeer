@@ -1,4 +1,10 @@
 <p id="notice"></p>
+<% if  @user.closed %>
+<div class="alert alert-danger" role="alert">
+  Account is closed
+  <%= link_to "Open account", toggle_activity_user_path(@user.id), method: :post, class: "btn btn-outline-success" if current_user && current_user.admin && current_user.id != @user.id %>
+</div>
+<%end%>
 
 <p>
   <strong>Username:</strong>

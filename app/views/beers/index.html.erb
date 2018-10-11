@@ -19,7 +19,7 @@
         <td><%= beer.style.name %></td>
         <td><%= link_to beer.brewery.name, beer.brewery %> </td>
         <td><%= link_to'Edit', edit_beer_path(beer), class:'btn btn-primary'  if current_user %></td>
-        <td><%= link_to('Destroy', beer, method: :delete, data: { confirm: 'Are you sure?' }, class:'btn btn-danger', style:'color:white')  if current_user %></td>
+        <td><%= link_to('Destroy', beer, method: :delete, data: { confirm: 'Are you sure?' }, class:'btn btn-danger', style:'color:white')  if current_user && current_user.admin %></td>
       </tr>
     <% end %>
   </tbody>

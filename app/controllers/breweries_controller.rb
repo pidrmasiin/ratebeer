@@ -1,4 +1,5 @@
 class BreweriesController < ApplicationController
+  before_action :ensure_that_admin, only: [:destroy]
   before_action :ensure_that_signed_in, except: [:index, :show]
   before_action :set_brewery, only: [:show, :edit, :update, :destroy]
 
@@ -26,6 +27,8 @@ class BreweriesController < ApplicationController
   # POST /breweries
   # POST /breweries.json
   def create
+    puts 'halooo'
+    puts brewery_params
     @brewery = Brewery.new(brewery_params)
 
     respond_to do |format|
@@ -61,6 +64,15 @@ class BreweriesController < ApplicationController
       format.html { redirect_to breweries_url, notice: 'Brewery was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def toggle_activity
+    brewery = Brewery.find(params[:id])
+    brewery.update_attribute :active, !brewery.active
+
+    new_status = brewery.active? ? "active" : "retired"
+
+    redirect_to brewery, notice: "brewery activity status changed to #{new_status}"
   end
 
   private

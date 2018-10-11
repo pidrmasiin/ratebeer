@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :ensure_that_admin, only: [:toggle_activity]
   before_action :ensure_that_signed_in, except: [:index, :show, :new, :create]
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
@@ -63,6 +64,19 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def toggle_activity
+    user = User.find(params[:id])
+    if user.id != current_user.id
+      user.update_attribute :closed, !user.closed
+
+      new_status = user.closed? ? "closed" : "opened"
+
+      redirect_to user, notice: "user account #{new_status}"
+    else
+      redirect_to users_url, notice: "cant change your own status"
     end
   end
 

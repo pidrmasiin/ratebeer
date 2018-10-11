@@ -14,17 +14,17 @@
   <%= form_for(@beer) do |b| %>
     Name
     <br/> 
-    <%= b.text_field :name, class: "form-control" %>
+    <%= b.text_field :name, :placeholder => @beer.name, class: "form-control" %>
     <br/>
     <br/>
     Style
     <br/>
-    <%= b.select :style, options_from_collection_for_select(@styles, :id, :name),  class: "dropdown-menu" %>
+    <%= b.select :style, options_from_collection_for_select(@styles, :id, :name),  class: "dropdown-menu" if @styles%>
     <br/>
     <br/>
     Brewery
     <br/>
-    <%= b.select :brewery_id, options_from_collection_for_select(@breweries, :id, :name) %>
+    <%= b.select :brewery_id, options_from_collection_for_select(@breweries, :id, :name) if @breweries %>
     <br/>
     <br/>
     <%= b.submit %>

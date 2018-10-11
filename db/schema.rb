@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_09_145401) do
+ActiveRecord::Schema.define(version: 2018_10_11_124113) do
 
   create_table "beer_clubs", force: :cascade do |t|
     t.string "name"
@@ -63,6 +63,8 @@ ActiveRecord::Schema.define(version: 2018_10_09_145401) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "password_digest"
+    t.boolean "admin"
+    t.boolean "closed"
   end
 
 end
