@@ -25,7 +25,7 @@ class StylesController < ApplicationController
   # POST /styles
   # POST /styles.json
   def create
-    @style = Style.new(style_params['name'], info: style_params['info'])
+    @style = Style.new(name: style_params['name'], info: style_params['info'])
 
     respond_to do |format|
       if @style.save
