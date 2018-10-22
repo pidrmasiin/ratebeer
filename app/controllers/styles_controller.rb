@@ -26,7 +26,6 @@ class StylesController < ApplicationController
   # POST /styles.json
   def create
     @style = Style.new(name: style_params['name'], info: style_params['info'])
-
     respond_to do |format|
       if @style.save
         format.html { redirect_to @style, notice: 'Style was successfully created.' }

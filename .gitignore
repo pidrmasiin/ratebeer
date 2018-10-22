@@ -5,6 +5,7 @@
 #   git config --global core.excludesfile '~/.gitignore_global'
 env.sh
 test.sh
+
 # Ignore bundler config.
 /.bundle
 

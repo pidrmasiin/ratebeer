@@ -1,6 +1,6 @@
 class BreweriesController < ApplicationController
   before_action :ensure_that_admin, only: [:destroy]
-  before_action :ensure_that_signed_in, except: [:index, :show]
+  before_action :ensure_that_signed_in, except: [:index, :show, :list]
   before_action :set_brewery, only: [:show, :edit, :update, :destroy]
 
   # GET /breweries
@@ -8,6 +8,8 @@ class BreweriesController < ApplicationController
   def index
     @active_breweries = Brewery.active
     @retired_breweries = Brewery.retired
+    @breweries = Brewery.all
+
   end
 
   # GET /breweries/1
@@ -17,6 +19,7 @@ class BreweriesController < ApplicationController
 
   # GET /breweries/new
   def new
+    expire_fragment('brewerylist')
     @brewery = Brewery.new
   end
 
@@ -27,6 +30,7 @@ class BreweriesController < ApplicationController
   # POST /breweries
   # POST /breweries.json
   def create
+    expire_fragment('brewerylist')
     puts 'halooo'
     puts brewery_params
     @brewery = Brewery.new(brewery_params)
@@ -45,6 +49,7 @@ class BreweriesController < ApplicationController
   # PATCH/PUT /breweries/1
   # PATCH/PUT /breweries/1.json
   def update
+    expire_fragment('brewerylist')
     respond_to do |format|
       if @brewery.update(brewery_params)
         format.html { redirect_to @brewery, notice: 'Brewery was successfully updated.' }
@@ -73,6 +78,9 @@ class BreweriesController < ApplicationController
     new_status = brewery.active? ? "active" : "retired"
 
     redirect_to brewery, notice: "brewery activity status changed to #{new_status}"
+  end
+
+  def list
   end
 
   private

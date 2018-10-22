@@ -50,6 +50,9 @@
               </div>
             </li>
           <% else %>
+          <%# <li class="nav-item">
+              <%= link_to 'Github signin', "auth/provider/callback", { class: "btn btn-primary" } %>
+            <%# </li> %> 
             <li class="nav-item">
               <%= link_to 'signin', signin_path, { class: "nav-link" } %>
             </li>

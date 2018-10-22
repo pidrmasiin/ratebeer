@@ -1,11 +1,21 @@
 class BeersController < ApplicationController
   before_action :ensure_that_admin, only: [:destroy]
-  before_action :ensure_that_signed_in, except: [:index, :show]
+  before_action :ensure_that_signed_in, except: [:index, :show, :list]
   before_action :set_beer, only: [:show, :edit, :update, :destroy]
   # GET /beers
   # GET /beers.json
   def index
-    @beers = Beer.all
+    @order = params[:order] || 'name'
+    # jos fragmentti olemassa, lopetetaan metodi tähän (eli renderöidään heti näkymä)
+  return if request.format.html? && fragment_exist?("beerlist-#{@order}")
+
+    @beers = Beer.includes(:brewery, :style).all
+
+    @beers = case @order
+            when 'name' then @beers.sort_by(&:name)
+            when 'brewery' then @beers.sort_by{ |b| b.brewery.name }
+            when 'style' then @beers.sort_by{ |b| b.style.name }
+            end
   end
 
   # GET /beers/1
@@ -32,6 +42,7 @@ class BeersController < ApplicationController
   # POST /beers
   # POST /beers.json
   def create
+    ["beerlist-name", "beerlist-brewery", "beerlist-style"].each{ |f| expire_fragment(f) }
     joku = Style.find(beer_params[:style])
     @beer = Beer.new(name: beer_params[:name], brewery_id: beer_params[:brewery_id], style: joku)
     puts @beer
@@ -51,6 +62,7 @@ class BeersController < ApplicationController
   # PATCH/PUT /beers/1
   # PATCH/PUT /beers/1.json
   def update
+    ["beerlist-name", "beerlist-brewery", "beerlist-style"].each{ |f| expire_fragment(f) }
     puts "haloooooo"
     puts beer_params
     copy = beer_params
@@ -70,6 +82,7 @@ class BeersController < ApplicationController
   # DELETE /beers/1
   # DELETE /beers/1.json
   def destroy
+    ["beerlist-name", "beerlist-brewery", "beerlist-style"].each{ |f| expire_fragment(f) }
     @beer.destroy
     respond_to do |format|
       format.html { redirect_to beers_url, notice: 'Beer was successfully destroyed.' }
@@ -79,8 +92,10 @@ class BeersController < ApplicationController
 
   def average
     return 0 if ratings.empty?
-
     ratings.map(&:score).sum / ratings.count.to_f
+  end
+
+  def list
   end
 
   private

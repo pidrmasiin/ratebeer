@@ -84,3 +84,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'bootstrap', '~> 4.1.3'
 gem 'jquery-rails'
+gem 'rack-mini-profiler'
+gem 'omniauth-github', '~> 1.1', '>= 1.1.2'

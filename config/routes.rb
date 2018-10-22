@@ -19,6 +19,11 @@ Rails.application.routes.draw do
   delete 'signout', to: 'sessions#destroy'
   post 'places', to: 'places#search'
 
+  get 'beerlist', to:'beers#list'
+  get 'brewerylist', to:'breweries#list'
+
+  get 'auth/:provider/callback', to: 'sessions#create_oauth'
+  post 'auth/github', to: 'sessions#gitbutton'
   root 'breweries#index'
   
 end

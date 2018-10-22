@@ -23,4 +23,22 @@ class SessionsController < ApplicationController
     session[:user_id] = nil
     redirect_to :root
   end
+
+  # def gitbutton
+  # end
+
+  def create_oauth
+    # puts "HALOOOOO"
+    # puts request.env["omniauth.auth"]
+    # puts H
+    # @user = User.find_or_create_from_auth_hash(auth_hash)
+    # self.current_user = @user
+    # redirect_to '/'
+  end
+
+  # protected
+
+  # def auth_hash
+  #   request.env['omniauth.auth']
+  # end
 end
